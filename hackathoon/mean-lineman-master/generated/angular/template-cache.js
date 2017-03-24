@@ -1,20 +1,14 @@
 angular.module("app").run(["$templateCache", function($templateCache) {
 
   $templateCache.put("anon/home.html",
-    "<form role=\"search\" name=\"searchform\" method=\"get\">\n" +
-    "    <div class=\"row\">\n" +
-    "        <div class=\"col-sm-8\">\n" +
-    "            <div class=\"form-group\">\n" +
-    "                <div class=\"input-group\">\n" +
-    "                    <input type=\"text\" placeholder=\"recherche\" name=\"s\" class=\"form-control\">\n" +
-    "                    <div class=\"input-group-btn\">\n" +
-    "                        <button type=\"submit\" class=\"btn btn-inverse right-rounded\">Chercher</button>\n" +
-    "                    </div>\n" +
-    "                </div>\n" +
-    "            </div>\n" +
-    "        </div>\n" +
-    "    </div>\n" +
+    "<div class=\"col-xs-offset-5 partie\">\n" +
+    "<form class=\"navbar-form navbar-left\" role=\"search\">\n" +
+    "  <div class=\"form-group\">\n" +
+    "    <input type=\"text\" class=\"form-control\" placeholder=\"Recherche\">\n" +
+    "  </div>\n" +
+    "  <button type=\"submit\" class=\"btn btn-success\"> <span class=\"glyphicon glyphicon-ok\"></span></button>\n" +
     "</form>\n" +
+    "</div>\n" +
     "<div class=\"webcam\">\n" +
     "    <div ng-repeat=\"web in webcam.webcams\">\n" +
     "        <div class=\"title\">\n" +

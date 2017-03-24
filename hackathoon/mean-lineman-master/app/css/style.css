@@ -3,6 +3,12 @@
   height: 7em;
 }
 
+.partie {
+  height: 17em;
+  padding-top: 5em;
+  margin-bottom: 5em;
+}
+
 #titre{
   text-align: center;
   font-weight: bold;
@@ -45,9 +51,3 @@
  #social-em:hover {
      color: #f39c12;
  }
-
-#overlayPlay {
-  height: 20em;
-  width: 30%;
-  display: inline;
-}
