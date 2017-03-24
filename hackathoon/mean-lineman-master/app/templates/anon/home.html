@@ -1,11 +1,26 @@
-<h1>test webcam</h1>
+<form role="search" name="searchform" method="get">
+    <div class="row">
+        <div class="col-sm-8">
+            <div class="form-group">
+                <div class="input-group">
+                    <input type="text" placeholder="recherche" name="s" class="form-control">
+                    <div class="input-group-btn">
+                        <button type="submit" class="btn btn-inverse right-rounded">Chercher</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>
 <div class="webcam">
     <div ng-repeat="web in webcam.webcams">
-<div class="title">
-  {{web.title}}
-  {{web.id}}
-
-              <a name="lkr-timelapse-player" data-id="1462286101" data-play="day" href="//lookr.com/1462286101" target="_blank">Sonvigo: Alpine Bob − Meran 2000</a><script async type="text/javascript" src="//api.lookr.com/embed/script/timelapse.js"></script>
-      </div>
-      </div>
+        <div class="title">
+            <div class="container">
+                <div class="col-xs-4 bigup">
+                    <a name="lkr-timelapse-player" data-id="{{web.id}}" data-play="day" href="//lookr.com/{{web.id}}" target="_blank">{{web.title}}</a>
+                    <script async type="text/javascript" src="//api.lookr.com/embed/script/timelapse.js"></script>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>

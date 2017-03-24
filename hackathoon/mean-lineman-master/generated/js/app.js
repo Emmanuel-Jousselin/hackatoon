@@ -57854,16 +57854,16 @@ angular.module('app')
 
     });
 
-angular.module('app')
-    .controller('NavbarController', function($scope, Auth, CurrentUser) {
-        $scope.isCollapsed = true;
-        $scope.auth = Auth;
-        $scope.user = CurrentUser.user();
-
-        $scope.logout = function() {
-            Auth.logout();
-        };
-    });
+// angular.module('app')
+//     .controller('NavbarController', function($scope, Auth, CurrentUser) {
+//         $scope.isCollapsed = true;
+//         $scope.auth = Auth;
+//         $scope.user = CurrentUser.user();
+//
+//         $scope.logout = function() {
+//             Auth.logout();
+//         };
+//     });
 
 angular.module('app')
     .controller('ProfileController', function($scope, CurrentUser) {
@@ -57959,16 +57959,31 @@ angular.module('app')
 angular.module("app").run(["$templateCache", function($templateCache) {
 
   $templateCache.put("anon/home.html",
-    "<h1>test webcam</h1>\n" +
+    "<form role=\"search\" name=\"searchform\" method=\"get\">\n" +
+    "    <div class=\"row\">\n" +
+    "        <div class=\"col-sm-8\">\n" +
+    "            <div class=\"form-group\">\n" +
+    "                <div class=\"input-group\">\n" +
+    "                    <input type=\"text\" placeholder=\"recherche\" name=\"s\" class=\"form-control\">\n" +
+    "                    <div class=\"input-group-btn\">\n" +
+    "                        <button type=\"submit\" class=\"btn btn-inverse right-rounded\">Chercher</button>\n" +
+    "                    </div>\n" +
+    "                </div>\n" +
+    "            </div>\n" +
+    "        </div>\n" +
+    "    </div>\n" +
+    "</form>\n" +
     "<div class=\"webcam\">\n" +
     "    <div ng-repeat=\"web in webcam.webcams\">\n" +
-    "<div class=\"title\">\n" +
-    "  {{web.title}}\n" +
-    "  {{web.id}}\n" +
-    "\n" +
-    "              <a name=\"lkr-timelapse-player\" data-id=\"1462286101\" data-play=\"day\" href=\"//lookr.com/1462286101\" target=\"_blank\">Sonvigo: Alpine Bob − Meran 2000</a><script async type=\"text/javascript\" src=\"//api.lookr.com/embed/script/timelapse.js\"></script>\n" +
-    "      </div>\n" +
-    "      </div>\n" +
+    "        <div class=\"title\">\n" +
+    "            <div class=\"container\">\n" +
+    "                <div class=\"col-xs-4 bigup\">\n" +
+    "                    <a name=\"lkr-timelapse-player\" data-id=\"{{web.id}}\" data-play=\"day\" href=\"//lookr.com/{{web.id}}\" target=\"_blank\">{{web.title}}</a>\n" +
+    "                    <script async type=\"text/javascript\" src=\"//api.lookr.com/embed/script/timelapse.js\"></script>\n" +
+    "                </div>\n" +
+    "            </div>\n" +
+    "        </div>\n" +
+    "    </div>\n" +
     "</div>\n"
   );
 
@@ -57992,7 +58007,7 @@ angular.module("app").run(["$templateCache", function($templateCache) {
   );
 
   $templateCache.put("anon/navbar.html",
-    "<nav class=\"navbar navbar-default\" role=\"navigation\" ng-controller=\"NavbarController\">\n" +
+    "<!-- <nav class=\"navbar navbar-default\" role=\"navigation\" ng-controller=\"NavbarController\">\n" +
     "    <div class=\"container-fluid\">\n" +
     "        <div class=\"navbar-header\">\n" +
     "            <button type=\"button\" class=\"navbar-toggle\" data-toggle=\"collapse\" data-target=\"#navbar\">\n" +
@@ -58018,7 +58033,7 @@ angular.module("app").run(["$templateCache", function($templateCache) {
     "            </ul>\n" +
     "        </div>\n" +
     "    </div>\n" +
-    "</nav>\n"
+    "</nav> -->\n"
   );
 
   $templateCache.put("anon/register.html",

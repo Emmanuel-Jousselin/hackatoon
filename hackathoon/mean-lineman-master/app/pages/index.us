@@ -5,15 +5,55 @@
     <title>
         <%= pkg.name %>
     </title>
-
+    <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css" rel="stylesheet">
     <link rel="stylesheet" type="text/css" href="<%= css %>" media="all" />
 </head>
 
 <body>
+  <nav class="navbar navbar-toggleable-md navbar-light bg-faded">
+    <div class="container">
+      <div class="col-xs-offset-3 col-xs-2">
 
+      </div><a id="titre" class="navbar-brand" href="#"><h1>Webcams en Folie</h1></a>
+    </div>
+  </nav>
     <div ui-view='navbar'></div>
     <div ui-view='content'></div>
 
+    <style>
+      #map {
+        height: 300px;
+        width: 100%;
+       }
+    </style>
+    <div id="map"></div>
+    <script>
+      function initMap() {
+        var uluru = {lat: -25.363, lng: 131.044};
+        var map = new google.maps.Map(document.getElementById('map'), {
+          zoom: 4,
+          center: uluru
+        });
+        var marker = new google.maps.Marker({
+          position: uluru,
+          map: map
+        });
+      }
+    </script>
+    <script async defer
+    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAG0riCbKtjspcmSqhNr5sBXX54s2msRro&callback=initMap">
+    </script>
+    <div id="backfoot" class="container-fluid">
+    <hr>
+        <div class="text-center center-block">
+            <br />
+                <a href="https://www.facebook.com/bootsnipp"><i id="social-fb" class="fa fa-facebook-square fa-3x social"></i></a>
+	            <a href="https://twitter.com/bootsnipp"><i id="social-tw" class="fa fa-twitter-square fa-3x social"></i></a>
+	            <a href="https://plus.google.com/+Bootsnipp-page"><i id="social-gp" class="fa fa-google-plus-square fa-3x social"></i></a>
+	            <a href="mailto:bootsnipp@gmail.com"><i id="social-em" class="fa fa-envelope-square fa-3x social"></i></a>
+</div>
+    <hr>
+</div>
     <script type="text/javascript" src="<%= js %>"></script>
 </body>
 
