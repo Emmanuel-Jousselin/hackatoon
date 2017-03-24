@@ -57788,6 +57788,15 @@ angular.module('app')
     });
 
 angular.module('app')
+    .service('apiService', function($http) {
+
+        this.getAll = function(){
+              return $http.get('https://webcamstravel.p.mashape.com/webcams//list/orderby=random?show=webcams:image,location,url&lang=fr', {
+                      headers: {"X-Mashape-Key": "OXedZ7iUQimshR8yytdYAMJnXl1Yp1gsriKjsnwC2hmnNp9zL4"}
+  })};
+});
+
+angular.module('app')
     .service('UserService', function($http) {
         return {
             getAll: function() {
@@ -57803,6 +57812,18 @@ angular.module('app')
                 return $http.delete('/users/' + id);
             }
         };
+    });
+ 
+
+angular.module('app')
+    .controller('apiController', function($scope,apiService) {
+        $scope.webcam = function() {
+            apiService.getAll().then(function(res) {
+                $scope.webcam = res.data.result;
+                console.log(res.data.result);
+            });
+        };
+        $scope.webcam();
     });
 
 angular.module('app')
@@ -57830,7 +57851,7 @@ angular.module('app')
 
 angular.module('app')
     .controller('MainController', function($scope) {
-      /* Here is your main controller */
+
     });
 
 angular.module('app')
@@ -57878,7 +57899,7 @@ angular.module('app')
                 views: {
                     'content@': {
                         templateUrl: 'anon/home.html',
-                        controller: 'MainController'
+                        controller: 'apiController'
                     }
                 }
             })
@@ -57938,7 +57959,17 @@ angular.module('app')
 angular.module("app").run(["$templateCache", function($templateCache) {
 
   $templateCache.put("anon/home.html",
-    "<h1>Hello World</h1>"
+    "<h1>test webcam</h1>\n" +
+    "<div class=\"webcam\">\n" +
+    "    <div ng-repeat=\"web in webcam.webcams\">\n" +
+    "<div class=\"title\">\n" +
+    "  {{web.title}}\n" +
+    "  {{web.id}}\n" +
+    "\n" +
+    "              <a name=\"lkr-timelapse-player\" data-id=\"1462286101\" data-play=\"day\" href=\"//lookr.com/1462286101\" target=\"_blank\">Sonvigo: Alpine Bob − Meran 2000</a><script async type=\"text/javascript\" src=\"//api.lookr.com/embed/script/timelapse.js\"></script>\n" +
+    "      </div>\n" +
+    "      </div>\n" +
+    "</div>\n"
   );
 
   $templateCache.put("anon/login.html",

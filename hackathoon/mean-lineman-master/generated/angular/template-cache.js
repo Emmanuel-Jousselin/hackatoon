@@ -1,7 +1,17 @@
 angular.module("app").run(["$templateCache", function($templateCache) {
 
   $templateCache.put("anon/home.html",
-    "<h1>Hello World</h1>"
+    "<h1>test webcam</h1>\n" +
+    "<div class=\"webcam\">\n" +
+    "    <div ng-repeat=\"web in webcam.webcams\">\n" +
+    "<div class=\"title\">\n" +
+    "  {{web.title}}\n" +
+    "  {{web.id}}\n" +
+    "\n" +
+    "              <a name=\"lkr-timelapse-player\" data-id=\"1462286101\" data-play=\"day\" href=\"//lookr.com/1462286101\" target=\"_blank\">Sonvigo: Alpine Bob − Meran 2000</a><script async type=\"text/javascript\" src=\"//api.lookr.com/embed/script/timelapse.js\"></script>\n" +
+    "      </div>\n" +
+    "      </div>\n" +
+    "</div>\n"
   );
 
   $templateCache.put("anon/login.html",
