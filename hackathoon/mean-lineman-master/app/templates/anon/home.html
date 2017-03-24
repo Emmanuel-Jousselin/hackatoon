@@ -1,11 +1,28 @@
-<h1>test webcam</h1>
 <div class="webcam">
-    <div ng-repeat="web in webcam.webcams">
-<div class="title">
-  {{web.title}}
-  {{web.id}}
+    <div class="row">
+        <div class="col-lg-6" id="forBt">
+            <div class="input-group">
+                <input type="text" class="form-control" placeholder="Search for..." ng-model="search">
+                <span class="input-group-btn">
+          <button type="button" class="btn btn-success" ng-click="search()">Success</button>
+        </span>
+            </div>
+            <!-- /input-group -->
+        </div>
+        <!-- /.col-lg-6 -->
+    </div>
+    <!-- /.row -->
 
-              <a name="lkr-timelapse-player" data-id="1462286101" data-play="day" href="//lookr.com/1462286101" target="_blank">Sonvigo: Alpine Bob − Meran 2000</a><script async type="text/javascript" src="//api.lookr.com/embed/script/timelapse.js"></script>
-      </div>
-      </div>
+    <div ng-repeat="web in webcam.webcams">
+        <div class="container-fluid-camm">
+
+
+            <div class="col-xs-6 separation">
+
+                <a name="lkr-timelapse-player" data-id="{{web.id}}" data-play="day" href="//lookr.com/{{web.id}}" target="_blank">{{web.id}}</a>
+                <script async type="text/javascript" src="//api.lookr.com/embed/script/timelapse.js"></script>
+
+            </div>
+        </div>
+    </div>
 </div>

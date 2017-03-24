@@ -22,12 +22,12 @@ angular.module('app')
                     }
                 }
             })
-            .state('anon.login', {
-                url: '/login',
+            .state('anon.search', {
+                url: '/search',
                 views: {
                     'content@': {
-                        templateUrl: 'anon/login.html',
-                        controller: 'LoginController'
+                        templateUrl: 'anon/search.html',
+                        controller: 'searchController'
                     }
                 }
             })

@@ -57789,12 +57789,27 @@ angular.module('app')
 
 angular.module('app')
     .service('apiService', function($http) {
+        this.getAll = function() {
+            return $http.get('https://webcamstravel.p.mashape.com/webcams//list/orderby=random?show=webcams:image,location,url&lang=fr', {
+                headers: {
+                    "X-Mashape-Key": "OXedZ7iUQimshR8yytdYAMJnXl1Yp1gsriKjsnwC2hmnNp9zL4"
+                }
+            })
+        };
 
-        this.getAll = function(){
-              return $http.get('https://webcamstravel.p.mashape.com/webcams//list/orderby=random?show=webcams:image,location,url&lang=fr', {
-                      headers: {"X-Mashape-Key": "OXedZ7iUQimshR8yytdYAMJnXl1Yp1gsriKjsnwC2hmnNp9zL4"}
-  })};
-});
+
+      })
+
+angular.module('app')
+    .service('searchService', function($http) {
+        this.getAll = function() {
+            return $http.get('https://webcamstravel.p.mashape.com/webcams/list/country={country}', {
+                headers: {
+                    "X-Mashape-Key": "OXedZ7iUQimshR8yytdYAMJnXl1Yp1gsriKjsnwC2hmnNp9zL4"
+                }
+            })
+        };
+      })
 
 angular.module('app')
     .service('UserService', function($http) {
@@ -57816,11 +57831,10 @@ angular.module('app')
  
 
 angular.module('app')
-    .controller('apiController', function($scope,apiService) {
+    .controller('apiController', function($scope, apiService) {
         $scope.webcam = function() {
             apiService.getAll().then(function(res) {
                 $scope.webcam = res.data.result;
-                console.log(res.data.result);
             });
         };
         $scope.webcam();
@@ -57831,22 +57845,6 @@ angular.module('app')
         UserService.getOne(CurrentUser.user()._id).then(function(res) {
             $scope.user = res.data;
         });
-    });
-
-angular.module('app')
-    .controller('LoginController', function($scope, $state, Auth) {
-        $scope.errors = [];
-
-        $scope.login = function() {
-            if ($scope.loginForm.$valid) {
-                $scope.errors = [];
-                Auth.login($scope.user).then(function(result) {
-                    $state.go('user.profile');
-                }).catch(function(err) {
-                    $scope.errors.push(err);
-                });
-            }
-        };
     });
 
 angular.module('app')
@@ -57880,6 +57878,17 @@ angular.module('app')
     });
 
 angular.module('app')
+    .controller('SearchController', function($scope, searchService) {
+      $scope.search = function() {
+        console.log("hello to you");
+          searchService.getAll().then(function(res) {
+            $scope.search = res.data.result;
+          })
+          };
+          $scope.search();
+      })
+
+angular.module('app')
     .config(function($stateProvider, $urlRouterProvider, AccessLevels) {
         $stateProvider
             .state('anon', {
@@ -57903,12 +57912,12 @@ angular.module('app')
                     }
                 }
             })
-            .state('anon.login', {
-                url: '/login',
+            .state('anon.search', {
+                url: '/search',
                 views: {
                     'content@': {
-                        templateUrl: 'anon/login.html',
-                        controller: 'LoginController'
+                        templateUrl: 'anon/search.html',
+                        controller: 'searchController'
                     }
                 }
             })
@@ -57959,34 +57968,32 @@ angular.module('app')
 angular.module("app").run(["$templateCache", function($templateCache) {
 
   $templateCache.put("anon/home.html",
-    "<h1>test webcam</h1>\n" +
     "<div class=\"webcam\">\n" +
-    "    <div ng-repeat=\"web in webcam.webcams\">\n" +
-    "<div class=\"title\">\n" +
-    "  {{web.title}}\n" +
-    "  {{web.id}}\n" +
+    "    <div class=\"row\">\n" +
+    "        <div class=\"col-lg-6\" id=\"forBt\">\n" +
+    "            <div class=\"input-group\">\n" +
+    "                <input type=\"text\" class=\"form-control\" placeholder=\"Search for...\" ng-model=\"search\">\n" +
+    "                <span class=\"input-group-btn\">\n" +
+    "          <button type=\"button\" class=\"btn btn-success\" ng-click=\"search()\">Success</button>\n" +
+    "        </span>\n" +
+    "            </div>\n" +
+    "            <!-- /input-group -->\n" +
+    "        </div>\n" +
+    "        <!-- /.col-lg-6 -->\n" +
+    "    </div>\n" +
+    "    <!-- /.row -->\n" +
     "\n" +
-    "              <a name=\"lkr-timelapse-player\" data-id=\"1462286101\" data-play=\"day\" href=\"//lookr.com/1462286101\" target=\"_blank\">Sonvigo: Alpine Bob − Meran 2000</a><script async type=\"text/javascript\" src=\"//api.lookr.com/embed/script/timelapse.js\"></script>\n" +
-    "      </div>\n" +
-    "      </div>\n" +
-    "</div>\n"
-  );
-
-  $templateCache.put("anon/login.html",
-    "<div class=\"row\">\n" +
-    "    <div class=\"col-xs-6 col-xs-offset-3\">\n" +
-    "        <form class=\"form\" name=\"loginForm\" novalidate ng-submit=\"login()\">\n" +
-    "            <div ng-repeat=\"error in errors\">{{error.error}}</div>\n" +
-    "            <div class=\"input-group\">\n" +
-    "                <span class=\"input-group-addon\"><i class=\"glyphicon glyphicon-user\"></i></span>\n" +
-    "                <input id=\"email\" type=\"email\" class=\"form-control\" ng-model=\"user.email\" required placeholder=\"Email Address\">\n" +
+    "    <div ng-repeat=\"web in webcam.webcams\">\n" +
+    "        <div class=\"container-fluid-camm\">\n" +
+    "\n" +
+    "\n" +
+    "            <div class=\"col-xs-6 separation\">\n" +
+    "\n" +
+    "                <a name=\"lkr-timelapse-player\" data-id=\"{{web.id}}\" data-play=\"day\" href=\"//lookr.com/{{web.id}}\" target=\"_blank\">{{web.id}}</a>\n" +
+    "                <script async type=\"text/javascript\" src=\"//api.lookr.com/embed/script/timelapse.js\"></script>\n" +
+    "\n" +
     "            </div>\n" +
-    "            <div class=\"input-group\">\n" +
-    "                <span class=\"input-group-addon\"><i class=\"glyphicon glyphicon-lock\"></i></span>\n" +
-    "                <input id=\"password\" type=\"password\" class=\"form-control\" ng-model=\"user.password\" required placeholder=\"Password\">\n" +
-    "            </div>\n" +
-    "            <button type=\"submit\" class=\"btn btn-primary btn-block\">Login</button>\n" +
-    "        </form>\n" +
+    "        </div>\n" +
     "    </div>\n" +
     "</div>\n"
   );
@@ -58008,14 +58015,14 @@ angular.module("app").run(["$templateCache", function($templateCache) {
     "                <li ui-sref-active=\"active\"><a ui-sref=\"anon.home\">Home</a></li>\n" +
     "\n" +
     "            </ul>\n" +
-    "            <ul class=\"nav navbar-nav navbar-right\">\n" +
+    "            <!-- <ul class=\"nav navbar-nav navbar-right\">\n" +
     "                <li>\n" +
     "                    <li ui-sref-active=\"active\"><a ui-sref=\"anon.login\" ng-hide=\"auth.isAuthenticated()\">Login</a></li>\n" +
     "                    <li ui-sref-active=\"active\"><a ui-sref=\"anon.register\" ng-hide=\"auth.isAuthenticated()\">Register</a></li>\n" +
     "                    <li ui-sref-active=\"active\"><a ui-sref=\"user.dashboard\" ng-show=\"auth.isAuthenticated()\">Dashboard</a></li>\n" +
     "                    <li><a ng-click=\"logout()\" ng-show=\"auth.isAuthenticated()\" href='#'>Logout</a></li>\n" +
     "                </li>\n" +
-    "            </ul>\n" +
+    "            </ul> -->\n" +
     "        </div>\n" +
     "    </div>\n" +
     "</nav>\n"
@@ -58038,6 +58045,28 @@ angular.module("app").run(["$templateCache", function($templateCache) {
     "        </form>\n" +
     "    </div>\n" +
     "</div>\n"
+  );
+
+  $templateCache.put("anon/search.html",
+    "<div class=\"webcam\">\n" +
+    "\n" +
+    "\n" +
+    "  <div class=\"row\">\n" +
+    "      <div class=\"col-lg-6\" id=\"forBt\">\n" +
+    "          <div class=\"input-group\">\n" +
+    "              <input type=\"text\" class=\"form-control\" placeholder=\"Search for...\" ng-model=\"search\">\n" +
+    "\n" +
+    "          </div>\n" +
+    "      </div>\n" +
+    "  </div>\n" +
+    "  <a href=\"#\" ng-click=\"search()\">\n" +
+    "    <span class=\"input-group-btn\">\n" +
+    "    <button type=\"button\" class=\"btn btn-success\" ng-click=\"search()\">Success</button>\n" +
+    "    </span>\n" +
+    "  </a>\n" +
+    "\n" +
+    "\n" +
+    "    </div>\n"
   );
 
   $templateCache.put("user/dashboard.html",
