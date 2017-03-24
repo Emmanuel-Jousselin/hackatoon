@@ -27,7 +27,7 @@ angular.module('app')
                 views: {
                     'content@': {
                         templateUrl: 'anon/search.html',
-                        controller: 'searchController'
+                        controller: 'SearchController'
                     }
                 }
             })

@@ -1,19 +1,27 @@
 <div class="webcam">
 
+  <div class="container" id="forBt2">
 
-  <div class="row">
-      <div class="col-lg-6" id="forBt">
-          <div class="input-group">
-              <input type="text" class="form-control" placeholder="Search for..." ng-model="search">
+    <div class="row">
+        <div class="col-xs-10" id="ress">
+            <div class="input-group">
+                <span class="input-group-btn">
+                      <input type="text" class="form-control" placeholder="Search for..." ng-model="query">
+                      <button id="btp2" type="button" class="btn btn-success" ng-click="search()">Success</button>
+                      </span>
+                    </div>
+                </div>
+            </div>
 
-          </div>
-      </div>
-  </div>
-  <a href="#" ng-click="search()">
-    <span class="input-group-btn">
-    <button type="button" class="btn btn-success" ng-click="search()">Success</button>
-    </span>
-  </a>
+                      <div ng-repeat="web in webcams">
 
 
-    </div>
+                        <div class="col-xs-5">
+
+                            <a name="lkr-timelapse-player" data-id="{{web.id}}" data-play="day" href="//lookr.com/{{web.id}}" target="_blank">{{web.id}}</a>
+                            <script async type="text/javascript" src="//api.lookr.com/embed/script/timelapse.js"></script>
+
+
+              </div>
+            </div>
+            </div>

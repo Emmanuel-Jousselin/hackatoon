@@ -57802,8 +57802,8 @@ angular.module('app')
 
 angular.module('app')
     .service('searchService', function($http) {
-        this.getAll = function() {
-            return $http.get('https://webcamstravel.p.mashape.com/webcams/list/country={country}', {
+        this.getAll = function(country) {
+            return $http.get('https://webcamstravel.p.mashape.com/webcams/list/country=' + country, {
                 headers: {
                     "X-Mashape-Key": "OXedZ7iUQimshR8yytdYAMJnXl1Yp1gsriKjsnwC2hmnNp9zL4"
                 }
@@ -57879,14 +57879,15 @@ angular.module('app')
 
 angular.module('app')
     .controller('SearchController', function($scope, searchService) {
-      $scope.search = function() {
-        console.log("hello to you");
-          searchService.getAll().then(function(res) {
-            $scope.search = res.data.result;
-          })
-          };
-          $scope.search();
-      })
+        $scope.query = '';
+        $scope.webcams = []
+        $scope.search = function() {
+            searchService.getAll($scope.query).then(function(res) {
+              console.log(res.data);
+                $scope.webcams = res.data.result.webcams;
+            })
+        };
+    })
 
 angular.module('app')
     .config(function($stateProvider, $urlRouterProvider, AccessLevels) {
@@ -57917,7 +57918,7 @@ angular.module('app')
                 views: {
                     'content@': {
                         templateUrl: 'anon/search.html',
-                        controller: 'searchController'
+                        controller: 'SearchController'
                     }
                 }
             })
@@ -57971,10 +57972,8 @@ angular.module("app").run(["$templateCache", function($templateCache) {
     "<div class=\"webcam\">\n" +
     "    <div class=\"row\">\n" +
     "        <div class=\"col-lg-6\" id=\"forBt\">\n" +
-    "            <div class=\"input-group\">\n" +
-    "                <input type=\"text\" class=\"form-control\" placeholder=\"Search for...\" ng-model=\"search\">\n" +
     "                <span class=\"input-group-btn\">\n" +
-    "          <button type=\"button\" class=\"btn btn-success\" ng-click=\"search()\">Success</button>\n" +
+    "        <a href=\"/#!/search\"><button id=\"research\" type=\"button\" class=\"btn btn-success\">SEARCH!</button></a>  \n" +
     "        </span>\n" +
     "            </div>\n" +
     "            <!-- /input-group -->\n" +
@@ -58050,23 +58049,31 @@ angular.module("app").run(["$templateCache", function($templateCache) {
   $templateCache.put("anon/search.html",
     "<div class=\"webcam\">\n" +
     "\n" +
+    "  <div class=\"container\" id=\"forBt2\">\n" +
     "\n" +
-    "  <div class=\"row\">\n" +
-    "      <div class=\"col-lg-6\" id=\"forBt\">\n" +
-    "          <div class=\"input-group\">\n" +
-    "              <input type=\"text\" class=\"form-control\" placeholder=\"Search for...\" ng-model=\"search\">\n" +
+    "    <div class=\"row\">\n" +
+    "        <div class=\"col-xs-10\" id=\"ress\">\n" +
+    "            <div class=\"input-group\">\n" +
+    "                <span class=\"input-group-btn\">\n" +
+    "                      <input type=\"text\" class=\"form-control\" placeholder=\"Search for...\" ng-model=\"query\">\n" +
+    "                      <button id=\"btp2\" type=\"button\" class=\"btn btn-success\" ng-click=\"search()\">Success</button>\n" +
+    "                      </span>\n" +
+    "                    </div>\n" +
+    "                </div>\n" +
+    "            </div>\n" +
     "\n" +
-    "          </div>\n" +
-    "      </div>\n" +
-    "  </div>\n" +
-    "  <a href=\"#\" ng-click=\"search()\">\n" +
-    "    <span class=\"input-group-btn\">\n" +
-    "    <button type=\"button\" class=\"btn btn-success\" ng-click=\"search()\">Success</button>\n" +
-    "    </span>\n" +
-    "  </a>\n" +
+    "                      <div ng-repeat=\"web in webcams\">\n" +
     "\n" +
     "\n" +
-    "    </div>\n"
+    "                        <div class=\"col-xs-5\">\n" +
+    "\n" +
+    "                            <a name=\"lkr-timelapse-player\" data-id=\"{{web.id}}\" data-play=\"day\" href=\"//lookr.com/{{web.id}}\" target=\"_blank\">{{web.id}}</a>\n" +
+    "                            <script async type=\"text/javascript\" src=\"//api.lookr.com/embed/script/timelapse.js\"></script>\n" +
+    "\n" +
+    "\n" +
+    "              </div>\n" +
+    "            </div>\n" +
+    "            </div>\n"
   );
 
   $templateCache.put("user/dashboard.html",
